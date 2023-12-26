@@ -33,12 +33,18 @@
 #include "cy_retarget_io.h"
 
 /*********************************************************************************************************************/
+/*------------------------------------------------------Macros-------------------------------------------------------*/
+/*********************************************************************************************************************/
+/* Flag control */
+#define ONE_SECOND            ((TCPWM_COUNTER_config.period + 1) / 10)
+
+/*********************************************************************************************************************/
 /*-------------------------------------------------Global Variables--------------------------------------------------*/
 /*********************************************************************************************************************/
 /* Interrupt configuration */
 const cy_stc_sysint_t IRQ_CFG =
 {
-    .intrSrc = ((NvicMux3_IRQn << 16) | TCPWM_COUNTER_IRQ),
+    .intrSrc = ((NvicMux3_IRQn << CY_SYSINT_INTRSRC_MUXIRQ_SHIFT) | TCPWM_COUNTER_IRQ),
     .intrPriority = 2UL
 };
 
@@ -68,8 +74,14 @@ void handle_TCPWM_IRQ(void)
     {
     	uint32_t capturedCounter = Cy_TCPWM_Counter_GetCapture0Val(TCPWM_COUNTER_HW, TCPWM_COUNTER_NUM);
         uint32_t duration = TCPWM_COUNTER_config.period - capturedCounter;
-        printf("********************************************** Pushdown time = %ld.%ld ms  \r\n",
-               (duration / 10), (duration % 10));
+        if (duration < ONE_SECOND)
+        {
+            printf("********************************************** Pushdown time = %ld ms  \r\n", duration);
+        }
+        else
+        {
+            printf("********************************************** Pushdown time = %ld.%ld s  \r\n", (duration / 1000), (duration % 1000));
+        }
     }
     /* Underflow */
     else if (0UL != (CY_TCPWM_INT_ON_TC & intrMask))
