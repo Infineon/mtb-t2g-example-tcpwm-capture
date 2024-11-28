@@ -1,20 +1,19 @@
 <img src="./images/IFX_LOGO_600.gif" align="right" width="150"/>
 
+
 # TCPWM Capture
 **This code example shows how to configure the capture function using TCPWM (Timer, Counter and Pulse Width Modulator) block and describes its operation and initial settings.**
 
 ## Device
 The device used in this code example (CE) is:
-- [TRAVEO™ T2G CYT4BF Series](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-body/traveo-t2g-cyt4bf-series/)
-- [TRAVEO™ T2G CYT2BL Series](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-body/traveo-t2g-cyt2bl-series/)
+- [TRAVEO™ T2G CYT4DN Series](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-cluster/traveo-t2g-cyt4dn/)
 
 ## Board
 The board used for testing is:
-- TRAVEO&trade; T2G evaluation kit ([KIT_T2G-B-H_EVK](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_evk/), [KIT_T2G-B-H_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_lite/))
-- TRAVEO&trade; T2G Body Entry Lite evaluation kit ([KIT_T2G-B-E_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-e_lite/))
+- TRAVEO&trade; T2G Cluster 6M Lite Kit ([KIT_T2G_C-2D-6M_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g_c-2d-6m_lite/))
 
 ## Scope of work
-The example configures TCPWM (Timer, Counter and Pulse Width Modulator) as the Counter mode with User button (USER_BTN) as input. The button is used as start, reload and stop trigger. In addition, the rising edge made by the button release will be captured by the counter.
+The example configures TCPWM (Timer, Counter and Pulse Width Modulator) as the Counter mode with User Button2 (USER_BTN2) as input. The button is used as start, reload and stop trigger. In addition, the rising edge made by the button release will be captured by the counter.
 
 ## Introduction  
 
@@ -48,73 +47,63 @@ The TCPWM block has the following features:
 - Integrate closely to the I/O pads, providing shortest signal paths with programmability
 
 More details can be found in:
-- TRAVEO&trade; T2G CYT4BF Series
-  - [Technical Reference Manual (TRM)](https://www.infineon.com/dgdl/?fileId=5546d4627600a6bc017600bfae720007)
-  - [Registers TRM](https://www.infineon.com/dgdl/?fileId=5546d4627600a6bc017600be2aef0004)
-  - [Data Sheet](https://www.infineon.com/dgdl/?fileId=5546d46275b79adb0175dc8387f93228)
-- TRAVEO&trade; T2G CYT2BL Series
-  - [Technical Reference Manual (TRM)](https://www.infineon.com/dgdl/?fileId=5546d462766cbe860176804ea8d27e9b)
-  - [Registers TRM](https://www.infineon.com/dgdl/?fileId=5546d4627600a6bc017600b9a0ca0000)
-  - [Data Sheet](https://www.infineon.com/dgdl/?fileId=8ac78c8c82ce566401836c4d5e9a46c8)
+- TRAVEO&trade; T2G CYT4DN
+  - [Technical Reference Manual (TRM)](https://www.infineon.com/dgdl/?fileId=8ac78c8c8691902101869f03007d2d87)
+  - [Registers TRM](https://www.infineon.com/dgdl/?fileId=8ac78c8c8691902101869ef098052d79)
+  - [Data Sheet](https://www.infineon.com/dgdl/?fileId=8ac78c8c869190210186f0cceff43fd0)
 
 ## Hardware setup
 This CE has been developed for:
-- TRAVEO&trade; T2G evaluation kit ([KIT_T2G-B-H_EVK](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_evk/))<BR>
-<img src="./images/KIT_T2G-B-H_EVK.gif"/><BR>
-  
-- TRAVEO&trade; T2G Body High Lite evaluation kit ([KIT_T2G-B-H_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_lite/))<BR>
-<img src="./images/KIT_T2G-B-H_LITE.gif"/><BR>
+- TRAVEO&trade; T2G Cluster 6M Lite Kit ([KIT_T2G_C-2D-6M_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g_c-2d-6m_lite/))<BR>
 
-- TRAVEO&trade; T2G Body Entry Lite evaluation kit ([KIT_T2G-B-E_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-e_lite/))<BR>
-<img src="./images/KIT_T2G-B-E_LITE.gif"/><BR>
+**Figure 1. KIT_T2G_C-2D-6M_LITE (Top View)**
+
+<img src="./images/kit_t2g_c-2d-6m_lite.png" width="800" /><BR>
   
    - **GPIO pins list**
      <table border="1" style="border-collapse: collapse">
      <thead><tr>
      <th>Board</th><th>USER_BTN</th><th>TCPWM input pin</th><th>Note</th></tr></thead>
      <tbody>
-     <tr><td><code>KIT_T2G-B-H_EVK</code></td><td>USER_BTN2 (P17[3])</td><td>P17[3]</td><td>None</td></tr>
+     <tr><td><code>KIT_T2G_C-2D-6M_LITE</code></td><td>User Button2 (P0[3])</td><td>P0[3]</td><td>None</td></tr>
      </tbody>
      <tbody>
-     <tr><td><code>KIT_T2G-B-H_LITE</code></td><td>USER_BTN2 (P17[0])</td><td>P13[6]</td><td>TCPWM input pin should be connected with USER_BTN</td></tr>
-     </tbody>
-     <tbody>
-     <tr><td><code>KIT_T2G-B-E_LITE</code></td><td>USER_BTN1 (P5[3])</td><td>P5[3]</td><td>None</td></tr>
-     </tbody>
-     </table>
+     </table>  
 
 ## Implementation
 
-In this code example, TCPWM counter is configured as down counting timer. The counter will be triggered by falling edge of the USER_BTN and the initial counter value 99999 will be reloaded at the same time. The timer captures the counter value at rising edge of the button with compare/capture 0 (CC0) Interrupt. If the button is not released 10 seconds, Terminal count (TC) interrupt will occur. Both the interrupts will show the status information on the terminal.
+The firmware is implemented in *main.c* and performs the following functions:
 
-**ModusToolBox Device configurator**
+1. In this code example, TCPWM counter is configured as down counting timer with the clock 1 kHz. 
+2. The counter will be triggered by falling edge of the User Button2 and the initial counter value 99999 will be reloaded at the same time. 
+3. The timer captures the counter value at rising edge of the button with compare/capture 0 (CC0) Interrupt. 
+4. If the User Button2 is not released 10 seconds, a terminal count (TC) interrupt will occur.
+5. Both the interrupts will show the status information on the terminal.
 
-This code example project can be created or imported using ModusToolBox IDE. To configure the project in the **Quick Panel**, click on **DeviceConfigurator**    
+**ModusToolbox&trade; Device configurator**
 
-<BR><img src="./images/ModusToolBox_IDE.png" width="800" /><BR>
+This code example project can be created or imported using ModusToolbox&trade; IDE. To configure the project in the **Quick Panel**, click on **Device Configurator**    
 
-<BR><img src="./images/DeviceConfigurator.png" width="800" /><BR>
+**Figure 2. Select Device Configurator**
+<BR><img src="./images/ModusToolBox_IDE.png" width="600" /><BR>
 
-**Configuration TCPWM**
+**Figure 3. Configuration TCPWM**
+<BR><img src="./images/TCPWM.png" width="800" /><BR>
 
-<BR><img src="./images/TCPWM.png" width="1024" /><BR>
+**Figure 4. Configuration User Button2**
+<BR><img src="./images/UserButton2.png" width="1024" /><BR>
 
-**Configuration USER BTN**
-
-<BR><img src="./images/UserBtn1.png" width="1024" /><BR>
-
-**Configuration Clock**
-
+**Figure 5. Configuration Clock**
 <BR><img src="./images/Clock.png" width="1024" /><BR>
 
-The basic idea is that the TCPWM will capture and store the counter values to the registers when the user button is released.
+The basic idea is that the TCPWM will capture and store the counter values to the registers when the User Button2 is released.
 
 - <a href="https://infineon.github.io/mtb-pdl-cat1/pdl_api_reference_manual/html/group__group__tcpwm__functions__counter.html#ga6068a06ddc8a07c67bb6df86e920944c"><i>Cy_TCPWM_Counter_Init()</i></a> reflects the TCPWM configuration to the device
-- The configurations regarding the USER_BTN and the clock used by TCPWM are reflected in *cybsp_init()* automatically
+- The configurations regarding the USER_BTN2 and the clock used by TCPWM are reflected in *cybsp_init()* automatically
 - The interrupt handler *handle_TCPWM_IRQ()* is registered by <a href="https://infineon.github.io/mtb-pdl-cat1/pdl_api_reference_manual/html/group__group__sysint__functions.html#gab2ff6820a898e9af3f780000054eea5d"><i>Cy_SysInt_Init()</i></a>, and calling *NVIC_SetPriority()* and *NVIC_EnableIRQ()* to enable the interrupt
 - Then <a href="https://infineon.github.io/mtb-pdl-cat1/pdl_api_reference_manual/html/group__group__tcpwm__functions__counter.html#ga1707e2cc291fe486fbea346157c65bff"><i>Cy_TCPWM_Counter_Enable()</i></a> enables the configured TCPWM functionality
 
-This code example asks user to press and release the user button to start the counter and to capture the time interval. The function *handle_TCPWM_IRQ()* handles two types of interrupt. After the TCPWM channel starts counting by a falling edge of USER_BTN (means button push), the function will be called when a rising edge (means button release) has been detected. Or also when an underflow (means 10 seconds passed without button release) has been detected.
+This code example asks user to press and release the User button2 to start the counter and to capture the time interval. The function *handle_TCPWM_IRQ()* handles two types of interrupt. After the TCPWM channel starts counting by a falling edge of USER_BTN2 (means User Button2 push), the function will be called when a rising edge (means User Button2 release) has been detected. Or also when an underflow (means 10 seconds passed without User Button2 release) has been detected.
 - Firstly, this function calls <a href="https://infineon.github.io/mtb-pdl-cat1/pdl_api_reference_manual/html/group__group__tcpwm__functions__common.html#gabb00d4f53ff5db82aa6f5e5ae0e79f8a"><i>Cy_TCPWM_GetInterruptStatusMasked()</i></a> to get interrupt reason, then calls <a href="https://infineon.github.io/mtb-pdl-cat1/pdl_api_reference_manual/html/group__group__tcpwm__functions__common.html#ga0c7a2d667dc983c82327463529f5d283"><i>Cy_TCPWM_ClearInterrupt()</i></a> to clear it
 - If the interrupt reason is *CY_TCPWM_INT_ON_CC0*, it means rising edge was detected, so the function calls <a href="https://infineon.github.io/mtb-pdl-cat1/pdl_api_reference_manual/html/group__group__tcpwm__functions__counter.html#ga53321a824ba298d75d8bed089bfb4595"><i>Cy_TCPWM_Counter_GetCapture0Val()</i></a> to get captured counter value
 - Otherwise if the interrupt reason is *CY_TCPWM_INT_ON_TC*, it means underflow was detected
@@ -131,30 +120,30 @@ This code example asks user to press and release the user button to start the co
 Before testing this code example:  
 - Power the board through the dedicated power connector 
 - Connect the board to the PC through the USB interface
-- Build the project using the dedicated Build button <img src="./Images/BuildProject.png" /> or by right-clicking the project name and selecting "Build Project"
+- Build the project using the dedicated Build button <img src="./images/buildproject.png" /> or by right-clicking the project name and selecting "Build Project"
 - To program the board, in the **Quick Panel**, scroll down, and click **[Project Name] Program (KitProg3_MiniProg4)**
 
 ## Run and Test
-For this example, an oscilloscope is needed to monitor user button port pin to check the correctness of the time interval captured by the software. In this example, Picoscope3000 series is used with SW [Pico scope 7](https://www.picotech.com/downloads) to monitor user button signal.
+For this example, an oscilloscope is needed to monitor User Button2 port pin to check the correctness of the time interval captured by the software. In this example, Picoscope3000 series is used with SW [Pico scope 7](https://www.picotech.com/downloads) to monitor user button signal.
 
-- Open the terminal program (example download and install [Teraterm](https://tera-term.en.softonic.com/ ) select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
+- Open the terminal program (example download and install [Tera Term](https://teratermproject.github.io/index-en.html) select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
 
-- After programming, the code example starts automatically and asks for User button press and releases.
+- After programming, the code example starts automatically and asks for User Button2 press and releases.
 
 **Figure: Terminal startup**
 
 <BR><img src="./images/Startup_Terminal.png" width="1024" /><BR> 
 
-- Press and release the USER BTN.
-- Monitor the time interval of user button press/release using oscilloscope and Terminal.
+- Press and release the User button2.
+- Monitor the time interval of User button2 press/release using oscilloscope and Terminal.
 
 **Figure: Terminal and Scope Output**
 
 <BR><img src="./images/Terminal_Output.png" width="1024" /><BR>
 
-<BR><img src="./images/Scope_Monitor.png" width="1024" /><BR>
+<br><img src="./images/Scope_Monitor.png" width="1024" /><br>
 
-- You can debug the example to step through the code. In the IDE, use the **[Project Name] Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox™ software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
+- You can debug the example to step through the code. In the IDE, use the **[Project Name] Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox™ software user guide](https://www.infineon.com/dgdl/?fileId=8ac78c8c8929aa4d0189bd07dd6113f9).
 
 **Note:** **(Only while debugging)** On the CM7 CPU, some code in *main()* may execute before the debugger halts at the beginning of *main()*. This means that some code executes twice: once before the debugger stops execution, and again after the debugger resets the program counter to the beginning of *main()*. See [KBA231071](https://community.cypress.com/docs/DOC-21143) to learn about this and for the workaround.
 
@@ -173,7 +162,7 @@ More code examples can be found on the GIT repository:
 - [TRAVEO™ T2G Code examples](https://github.com/orgs/Infineon/repositories?q=mtb-t2g-&type=all&language=&sort=)
 
 For additional trainings, visit our webpage:  
-- [TRAVEO™ T2G trainings](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-body/traveo-t2g-cyt4bf-series/#!trainings)
+- [TRAVEO™ T2G trainings](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-cluster/traveo-t2g-cyt4dn/#!trainings)
 
 For questions and support, use the TRAVEO&trade; T2G Forum:  
 - <https://community.infineon.com/t5/TRAVEO-T2G/bd-p/TraveoII>

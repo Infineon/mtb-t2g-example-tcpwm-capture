@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
  * \file main.c
- * \copyright Copyright (C) Infineon Technologies AG 2019
+ * \copyright Copyright (C) Infineon Technologies AG 2024
  *
  * Use of this file is subject to the terms of use agreed between (i) you or the company in which ordinary course of
  * business you are acting and (ii) Infineon Technologies AG or its licensees. If and as long as no such terms of use
@@ -117,8 +117,10 @@ int main(void)
     __enable_irq();
 
     /* Initialize retarget-io to use the debug UART port */
-    result = cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX,
-                                 CY_RETARGET_IO_BAUDRATE);
+    Cy_SCB_UART_Init(UART_HW, &UART_config, NULL);
+    Cy_SCB_UART_Enable(UART_HW);
+    result = cy_retarget_io_init(UART_HW);
+
 
     /* retarget-io init failed. Stop program execution */
     if (result != CY_RSLT_SUCCESS)
