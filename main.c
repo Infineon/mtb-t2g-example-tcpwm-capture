@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
  * \file main.c
- * \copyright Copyright (C) Infineon Technologies AG 2024
+ * \copyright Copyright (C) Infineon Technologies AG 2019
  *
  * Use of this file is subject to the terms of use agreed between (i) you or the company in which ordinary course of
  * business you are acting and (ii) Infineon Technologies AG or its licensees. If and as long as no such terms of use
@@ -31,6 +31,7 @@
 #include "cy_pdl.h"
 #include "cybsp.h"
 #include "cy_retarget_io.h"
+#include "mtb_hal.h"
 
 /*********************************************************************************************************************/
 /*------------------------------------------------------Macros-------------------------------------------------------*/
@@ -47,6 +48,10 @@ const cy_stc_sysint_t IRQ_CFG =
     .intrSrc = ((NvicMux3_IRQn << CY_SYSINT_INTRSRC_MUXIRQ_SHIFT) | TCPWM_COUNTER_IRQ),
     .intrPriority = 2UL
 };
+
+/* For the Retarget -IO (Debug UART) usage */
+static cy_stc_scb_uart_context_t    UART_context;          /** UART context */
+static mtb_hal_uart_t               UART_hal_obj;          /** Debug UART HAL object */
 
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
@@ -80,7 +85,8 @@ void handle_TCPWM_IRQ(void)
         }
         else
         {
-            printf("********************************************** Pushdown time = %ld.%ld s  \r\n", (duration / 1000), (duration % 1000));
+            printf("********************************************** Pushdown time = %ld.%ld s  \r\n"
+            , (duration / 1000), (duration % 1000));
         }
     }
     /* Underflow */
@@ -116,10 +122,33 @@ int main(void)
     /* Enable global interrupts */
     __enable_irq();
 
-    /* Initialize retarget-io to use the debug UART port */
-    Cy_SCB_UART_Init(UART_HW, &UART_config, NULL);
+    /* Debug UART init */
+    result = (cy_rslt_t)Cy_SCB_UART_Init(UART_HW, &UART_config, &UART_context);
+
+    /* UART init failed. Stop program execution */
+    if (result != CY_RSLT_SUCCESS)
+    {
+        CY_ASSERT(0);
+    }
+
     Cy_SCB_UART_Enable(UART_HW);
-    result = cy_retarget_io_init(UART_HW);
+
+    /* Setup the HAL UART */
+    result = mtb_hal_uart_setup(&UART_hal_obj, &UART_hal_config, &UART_context, NULL);
+
+    /* HAL UART init failed. Stop program execution */
+    if (result != CY_RSLT_SUCCESS)
+    {
+        CY_ASSERT(0);
+    }
+
+    result = cy_retarget_io_init(&UART_hal_obj);
+
+    /* HAL retarget_io init failed. Stop program execution */
+    if (result != CY_RSLT_SUCCESS)
+    {
+        CY_ASSERT(0);
+    }
 
 
     /* retarget-io init failed. Stop program execution */
